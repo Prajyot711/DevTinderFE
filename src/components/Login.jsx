@@ -12,6 +12,7 @@ const Login = () => {
   const[password,setPassword] = useState("Pranali@123")
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const[error, setError] = useState("")
 
   const handleLogin = async () => {
     try{
@@ -23,11 +24,10 @@ const Login = () => {
       withCredentials:true,
     });
       const userData = response.data.data;
-      //console.log(userData)
       dispatch(addUser(userData))
       return navigate("/")
     }catch(err){
-      console.error(err)
+      setError(err?.response?.data || "Something went wrong")
     }
   }
 
@@ -50,7 +50,7 @@ const Login = () => {
             <p className="label"></p>
             <legend className="fieldset-legend">Password</legend>
             <input type="text" value={password} className="input" placeholder="Enter Password" onChange={(e) => setPassword(e.target.value)}/>
-            <p className="label"></p>
+            <p className="text-red-500">{error}</p>
           </fieldset>
           <div className="card-actions justify-center">
           <button className="btn btn-primary justify-center" onClick={handleLogin}>Login</button>
