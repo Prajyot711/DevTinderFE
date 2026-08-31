@@ -7,7 +7,7 @@ import { removeUser } from "../utils/userSlice";
 
 const Navbar = () => {
     
-    const user =  useSelector(store => store.user)
+    const user =  useSelector((store) => store.user)
     const navigate = useNavigate();
     const dispatch = useDispatch();    
 
@@ -26,13 +26,13 @@ const Navbar = () => {
     return (
         <div className="navbar bg-base-300 shadow-sm">
             <div className="flex-1">
-                <Link to="/" className="btn btn-ghost text-xl">🧑‍💻 DevTinder</Link>
+                <Link to="/" className="btn btn-ghost text-2xl">🧑‍💻 DevTinder</Link>
             </div>
             <div className="flex gap-2">
 
                 {user && (<div className="dropdown dropdown-end mx-5 flex">
-                    <p>Welcome, {user.firstName}</p>
-                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                    <p className="text-xl mt-1 text-fuchsia-500 font-bold">Welcome, {user.firstName}</p>
+                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar mx-2">
                         <div className="w-10 rounded-full">
                             <img
                                 alt="user Photo"
@@ -48,7 +48,7 @@ const Navbar = () => {
                                 <span className="badge">New</span>
                             </Link>
                         </li>
-                        <li><a>Settings</a></li>
+                        <li><Link to="/connections">Connections</Link></li>
                         <li><Link onClick={handleLogout}>Logout</Link></li>
                     </ul>
                 </div>)}

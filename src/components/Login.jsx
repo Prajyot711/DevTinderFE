@@ -23,8 +23,7 @@ const Login = () => {
     {
       withCredentials:true,
     });
-      const userData = response.data.data;
-      dispatch(addUser(userData))
+      dispatch(addUser(response.data.data))
       return navigate("/")
     }catch(err){
       setError(err?.response?.data || "Something went wrong")
@@ -36,14 +35,6 @@ const Login = () => {
       <div className="card card-border bg-base-300 w-96">
         <div className="card-body">
           <h2 className="card-title">Login</h2>
-          {/* <div className="">
-            <label>Email:</label>
-            <input className="bg-base-100" type="text" placeholder="Enter Email" onChange={(e) => setEmail(e.target.value)}/>
-            <br></br>
-            <label>Password:</label>
-            <input className="bg-base-100" type="password" placeholder="Enter Password" onChange={(e) => setPassword(e.target.value)}/>
-
-          </div> */}
           <fieldset className="fieldset">
             <legend className="fieldset-legend">Email Id</legend>
             <input type="text" value={emailId} className="input" placeholder="Enter Email" onChange={(e) => setEmailId(e.target.value)}/>

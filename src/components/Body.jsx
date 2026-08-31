@@ -5,19 +5,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { BASE_URL } from '../utils/constants'
 import { addUser } from '../utils/userSlice'
-import { useCallback, useEffect} from 'react'
+import {useEffect} from 'react'
 
 
 const Body = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userProfile = useSelector(store => store.user)
+  const userProfile = useSelector((store) => store.user)
 
-  const fetchUser = useCallback(async() => {
+  const fetchUser = async() => {
     if(userProfile) return;
     try{
       const res = await axios.get(BASE_URL + '/profile/view' , {withCredentials:true})
-      dispatch(addUser(res.data))
+      dispatch(addUser(res.data.data))
 
     }catch(err){
       if(err.status == 401){
@@ -25,11 +25,11 @@ const Body = () => {
       }
       console.error(err)
     }
-  },[userProfile]);
+  };
 
   useEffect(() => {
       fetchUser();
-  }, []);
+  },[]);
 
   return (
     <div>
