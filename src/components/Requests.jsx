@@ -1,7 +1,7 @@
 import axios from "axios"
 import { BASE_URL } from "../utils/constants"
 import { useDispatch, useSelector } from "react-redux"
-import { addRequest } from "../utils/requestSlice"
+import { addRequest, removeRequest } from "../utils/requestSlice"
 import { useEffect } from "react"
 
 const Requests = () => {
@@ -18,6 +18,16 @@ const Requests = () => {
         }
     }
 
+    const reviewRequest = async(status, _id) => {
+        try{
+            const res = await axios.post(BASE_URL + "/request/review/" + status + "/" + _id, {}, {withCredentials:true})
+            console.log(res)
+            dispatch(removeRequest(_id))
+        }catch(err){
+            console.error(err.message)
+        }
+    }
+
     useEffect(() => {
         getRequests();
     },[])
@@ -29,9 +39,9 @@ const Requests = () => {
     return (
     <div>
         <h1 className="flex justify-center my-10 font-bold text-3xl ">Connections</h1>
-        {requests.map((user) => {
+        {requests.map((request) => {
 
-            const{_id,firstName, lastName, age, gender, photoUrl} = user.fromUserId
+            const{_id,firstName, lastName, age, gender, photoUrl} = request.fromUserId
 
             return(
                 <div className="flex justify-between mx-auto bg-base-300 m-4 p-4 rounded-lg max-w-4/12 items-center" key={_id}>
@@ -44,8 +54,8 @@ const Requests = () => {
                         <p>{age && gender && <p>`${age}, ${gender}`</p>}</p>
                     </div>
                     <div>
-                        <button className="btn btn-secondary mx-2">Accept</button>
-                        <button className="btn btn-primary mx-2">Reject</button>    
+                        <button className="btn btn-secondary mx-2" onClick={() => reviewRequest("accepted", request._id)}>Accept</button>
+                        <button className="btn btn-primary mx-2" onClick={() => reviewRequest("rejected", request._id)}>Reject</button>    
                     </div>
                 </div>
             )
