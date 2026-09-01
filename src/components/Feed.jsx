@@ -25,12 +25,14 @@ const Feed = () => {
     getFeed()
   },[])
 
+  if(!feed) return;
+
+  if(feed.length <= 0) return <p className="flex justify-center font-bold text-3xl my-10">Feed got empty!</p>
+
   return (
     feed &&
     (<div className="flex justify-center my-10 mx-5">
-      {feed.map((user,_id) => (
-        <UserCard key={_id} user={user}/>
-      ))}
+        <UserCard user={feed[0]}/>
         
     </div>)
   )
