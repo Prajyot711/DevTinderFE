@@ -59,10 +59,10 @@ const Login = () => {
           <fieldset className="fieldset">
             {!isLogin && <>
             <legend className="fieldset-legend">First Name</legend>
-            <input type="text" value={firstName} className="input" placeholder="Enter Email" onChange={(e) => setFirstName(e.target.value)}/>
+            <input type="text" value={firstName} className="input" placeholder="Enter Firstname" onChange={(e) => setFirstName(e.target.value)}/>
             <p className="label"></p>
-            <legend className="fieldset-legend">Password</legend>
-            <input type="text" value={lastName} className="input" placeholder="Enter Password" onChange={(e) => setLastName(e.target.value)}/>
+            <legend className="fieldset-legend">Last Name</legend>
+            <input type="text" value={lastName} className="input" placeholder="Enter Lastname" onChange={(e) => setLastName(e.target.value)}/>
             </>}
             <p className="label"></p>
             <legend className="fieldset-legend">Email Id</legend>
