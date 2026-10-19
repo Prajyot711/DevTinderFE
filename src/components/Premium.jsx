@@ -1,9 +1,43 @@
+import axios from "axios"
+import { BASE_URL } from "../utils/constants"
 
 
 const Premium = () => {
   
-  const handlePayment = async() => {
+  const handlePayment = async(type) => {
+    try{
+        const order = await axios.post(BASE_URL + "/payment/create" , {
+            membershipType:type,
+        },{
+            withCredentials:true
+        });
 
+        console.log(order)
+        const{amount, currency, notes, orderId} = order.data.data
+        const{ keyId } = order.data
+
+        const options = {
+            key: keyId, // Replace with your Razorpay key_id
+            amount: amount, // Amount is in currency subunits.
+            currency: currency,
+            name: 'DevTinder',
+            description: 'Test Transaction',
+            order_id: orderId, // This is the order_id created in the backend
+            callback_url: BASE_URL + '/premium', // Your success URL
+            prefill: {
+                name: notes.firstName + " " + notes.lastName,
+                email: notes.emailId,
+            },
+            theme: {
+                color: '#F37254'
+            },
+        };
+
+        const rzp = new window.Razorpay(options);
+        rzp.open();
+    }catch(err){
+        console.log(err.message)
+    }
   }
   
     return (
@@ -16,7 +50,7 @@ const Premium = () => {
                 <li>- Blue Tick</li>
                 <li>- 3 months plan</li>
             </ul>
-            <button className="btn btn-primary" onClick={() => handlePayment()}>Buy Silver</button>
+            <button className="btn btn-primary" onClick={() => handlePayment("silver")}>Buy Silver</button>
         </div>
         <div className="divider lg:divider-horizontal">OR</div>
         <div className="card bg-base-300 rounded-box grid h-80 grow place-items-center">
@@ -27,7 +61,7 @@ const Premium = () => {
                 <li>- Blue Tick</li>
                 <li>- 6 months plan</li>
             </ul>
-            <button className="btn btn-secondary" onClick={() => handlePayment()}>Buy Gold</button>
+            <button className="btn btn-secondary" onClick={() => handlePayment("gold")}>Buy Gold</button>
         </div>
     </div>
   )
